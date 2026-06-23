@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Platformer Dash</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="viewport">
+      <canvas
+        id="gameCanvas"
+        width="800"
+        height="600"
+        aria-label="Platformer Dash"
+      ></canvas>
+
+      <!-- UI Overlays -->
+      <div id="ui">
+        <div id="menu" class="screen active">
+          <h1>PLATFORMER DASH</h1>
+          <div class="menu-buttons">
+            <button id="startBtn">Start Game</button>
+            <button id="settingsBtn">Settings</button>
+            <button id="scoresBtn">High Scores</button>
+          </div>
+          <div class="menu-footer">
+            Arrow / A D • Jump W / Space • P Pause • M Mute
+          </div>
+        </div>
+
+        <div id="settings" class="screen">
+          <h2>Settings</h2>
+          <label
+            >Difficulty:
+            <select id="difficulty">
+              <option value="EASY">Easy</option>
+              <option value="NORMAL" selected>Normal</option>
+              <option value="HARD">Hard</option>
+            </select>
+          </label>
+          <label
+            >Volume:
+            <input id="volume" type="range" min="0" max="1" step="0.01"
+          /></label>
+          <label><input id="mute" type="checkbox" /> Mute</label>
+          <div class="menu-buttons">
+            <button id="saveSettingsBtn">Save</button>
+            <button id="settingsBackBtn">Back</button>
+          </div>
+        </div>
+
+        <div id="scores" class="screen">
+          <h2>High Scores</h2>
+          <ol id="scoresList"></ol>
+          <div class="menu-buttons">
+            <button id="scoresBackBtn">Back</button>
+          </div>
+        </div>
+
+        <div id="paused" class="overlay screen">
+          <h2>PAUSED</h2>
+          <div class="menu-buttons">
+            <button id="resumeBtn">Resume</button>
+            <button id="restartBtn">Restart</button>
+            <button id="mainMenuBtn">Main Menu</button>
+          </div>
+        </div>
+
+        <div id="gameOver" class="screen">
+          <h2>GAME OVER</h2>
+          <div id="gameOverStats"></div>
+          <div class="menu-buttons">
+            <button id="retryBtn">Try Again</button>
+            <button id="gameOverMainBtn">Main Menu</button>
+          </div>
+        </div>
+
+        <div id="victory" class="screen">
+          <h2>VICTORY!</h2>
+          <div id="victoryStats"></div>
+          <div class="menu-buttons">
+            <button id="playAgainBtn">Play Again</button>
+            <button id="victoryMainBtn">Main Menu</button>
+          </div>
+        </div>
+
+        <!-- Mobile controls -->
+        <div id="touchControls" class="touch-controls hidden">
+          <button id="touchLeft" class="touch-btn">◀</button>
+          <button id="touchJump" class="touch-btn">●</button>
+          <button id="touchRight" class="touch-btn">▶</button>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud">
+          <div class="hud-top">
+            <div id="hud-top-left" class="hud-group">
+              <div class="hud-line">Score: <span id="score">0</span></div>
+              <div class="hud-line">
+                Coins: <span id="coins">0</span>/<span id="coinsTotal">15</span>
+              </div>
+            </div>
+            <div id="hud-top-right" class="hud-group">
+              <div class="hud-line">Lives: <span id="lives">3</span></div>
+              <div class="hud-line">Time: <span id="time">0:00</span></div>
+              <div class="hud-line hud-fps">FPS: <span id="fps">60</span></div>
+            </div>
+          </div>
+          <div id="hud-bottom-left" class="hud-group">
+            Difficulty: <span id="hud-difficulty">NORMAL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="game.js" defer></script>
+  </body>
+</html>

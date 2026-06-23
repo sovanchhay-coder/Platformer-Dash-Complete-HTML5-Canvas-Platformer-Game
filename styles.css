@@ -1,0 +1,180 @@
+:root {
+  --bg: #87ceeb;
+  --panel-bg: rgba(0, 0, 0, 0.6);
+  --accent: #22c55e;
+  --gold: #ffd700;
+  --font: "Segoe UI", Roboto, Arial, sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font);
+  background: linear-gradient(#87ceeb, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+canvas {
+  background: transparent;
+  display: block;
+  border: 6px solid #222;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+/* viewport wraps the canvas and UI so HUD aligns to canvas, not the window */
+#viewport {
+  position: relative;
+  display: inline-block;
+}
+#ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.screen {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 320px;
+  background: var(--panel-bg);
+  padding: 20px;
+  border-radius: 8px;
+  color: #fff;
+  text-align: center;
+  pointer-events: auto;
+  display: none;
+}
+.screen.active {
+  display: block;
+}
+.overlay {
+  width: 320px;
+}
+.menu-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 12px;
+}
+.menu-buttons button {
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.menu-buttons button:hover {
+  filter: brightness(1.05);
+}
+.menu-footer {
+  margin-top: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+#hud {
+  position: absolute;
+  inset: 0;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  font-weight: 700;
+}
+.hud-top {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.hud-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.hud-line {
+  background: rgba(0, 0, 0, 0.45);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+#hud-bottom-left {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.touch-controls {
+  position: absolute;
+  left: 8px;
+  bottom: 12px;
+  display: flex;
+  gap: 10px;
+  pointer-events: auto;
+}
+.touch-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 22px;
+}
+.hidden {
+  display: none;
+}
+#scoresList {
+  max-height: 220px;
+  overflow: auto;
+  text-align: left;
+  padding: 0 18px;
+}
+#scoresList li {
+  margin: 6px 0;
+}
+label {
+  display: block;
+  margin: 8px 0;
+  color: #fff;
+}
+input[type="range"] {
+  width: 100%;
+}
+@media (max-width: 640px) {
+  canvas {
+    width: 92vw;
+    height: 69vw;
+  }
+  .screen {
+    width: 90vw;
+  }
+  #hud {
+    font-size: 14px;
+  }
+  .menu-buttons {
+    flex-direction: column;
+  }
+  .touch-controls {
+    right: 8px;
+    left: auto;
+  }
+  .hud-line {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  #hud-bottom-left {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
