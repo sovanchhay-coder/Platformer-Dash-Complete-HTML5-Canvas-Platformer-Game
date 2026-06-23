@@ -716,7 +716,7 @@ function buildLevel(difficulty = "NORMAL") {
   const diff = DIFFICULTIES[difficulty] || DIFFICULTIES.NORMAL;
   CONFIG.START_LIVES = diff.START_LIVES;
   CONFIG.ENEMY_SPEED = diff.ENEMY_SPEED;
-  CONFIG.COIN_COUNT = diff.COIN_COUNT;
+  const targetCoinCount = diff.COIN_COUNT;
 
   const platforms = [];
   const coins = [];
@@ -799,11 +799,13 @@ function buildLevel(difficulty = "NORMAL") {
     coins.push(new Coin(CONFIG.LEVEL_WIDTH - 100, 140));
   })();
 
-  while (coins.length < CONFIG.COIN_COUNT) {
+  while (coins.length < targetCoinCount) {
     const x = rand(150, CONFIG.LEVEL_WIDTH - 150);
     const y = rand(200, 520);
     coins.push(new Coin(x, y));
   }
+
+  CONFIG.COIN_COUNT = coins.length;
 
   for (let x = 0; x < CONFIG.LEVEL_WIDTH; x += 200) {
     if (Math.random() < 0.4)
@@ -1154,6 +1156,10 @@ class Game {
     this.level.enemies.forEach((e) => e.update(dt));
     this.level.coins.forEach((c) => c.update(dt));
     this.player.update(dt, this.input, this.level.platforms);
+    if (this.player.lives <= 0) {
+      this.gameOver();
+      return;
+    }
 
     for (const c of this.level.coins) {
       if (c.checkCollect(this.player)) {
@@ -1199,10 +1205,11 @@ class Game {
       }
     }
 
-    const allCollected = this.level.coins.every((c) => c.collected);
-    const nearGoal = this.player.x > CONFIG.LEVEL_WIDTH - 200;
-    if (allCollected || nearGoal) {
+    const collectedCoins = this.level.coins.filter((c) => c.collected).length;
+    const totalCoins = CONFIG.COIN_COUNT;
+    if (collectedCoins >= totalCoins) {
       this.victory();
+      return;
     }
 
     this.particles.update(dt);
