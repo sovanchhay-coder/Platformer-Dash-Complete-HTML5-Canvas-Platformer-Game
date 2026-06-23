@@ -65,8 +65,8 @@ const CONFIG = {
 /* Difficulty presets - will be applied at game start */
 const DIFFICULTIES = {
   EASY: { START_LIVES: 5, ENEMY_SPEED: 60, COIN_COUNT: 10 },
-  NORMAL: { START_LIVES: 3, ENEMY_SPEED: 90, COIN_COUNT: 15 },
-  HARD: { START_LIVES: 2, ENEMY_SPEED: 130, COIN_COUNT: 20 },
+  NORMAL: { START_LIVES: 3, ENEMY_SPEED: 90, COIN_COUNT: 12 },
+  HARD: { START_LIVES: 2, ENEMY_SPEED: 130, COIN_COUNT: 16 },
 };
 
 /* =========================
@@ -803,6 +803,13 @@ function buildLevel(difficulty = "NORMAL") {
     const x = rand(150, CONFIG.LEVEL_WIDTH - 150);
     const y = rand(200, 520);
     coins.push(new Coin(x, y));
+  }
+
+  if (coins.length > targetCoinCount) {
+    while (coins.length > targetCoinCount) {
+      const removeIndex = Math.floor(rand(0, coins.length));
+      coins.splice(removeIndex, 1);
+    }
   }
 
   CONFIG.COIN_COUNT = coins.length;
